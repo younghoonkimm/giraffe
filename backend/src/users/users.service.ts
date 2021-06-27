@@ -6,11 +6,15 @@ import { User } from "./entities/user.entity";
 import { CreateAccountInput } from "./dtos/create-account.dto";
 import { LoginInput } from "./dtos/login.dto";
 import { JwtService } from "src/jwt/jwt.service";
+import { EditProfileInput } from "./dtos/edit-profile.dto";
+import { Verification } from "./entities/verification.entity";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly users: Repository<User>,
+    @InjectRepository(Verification)
+    private readonly verification: Repository<Verification>,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -25,7 +29,15 @@ export class UsersService {
       if (exists) {
         return { ok: false, error: "등록된 사용자가 있습니다" };
       }
-      await this.users.save(this.users.create({ email, password, role }));
+      const user = await this.users.save(
+        this.users.create({ email, password, role }),
+      );
+      await this.verification.save(
+        this.verification.create({
+          user,
+        }),
+      );
+      await this.verification.save(this.verification.create({ user }));
       return { ok: true };
     } catch (e) {
       return { ok: false, error: "계정생성에 실패하였습니다" };
@@ -63,5 +75,22 @@ export class UsersService {
         error,
       };
     }
+  }
+
+  async findById(id: number): Promise<User> {
+    return this.users.findOne({ id });
+  }
+
+  async editProfile(userId: number, { email, password }: EditProfileInput) {
+    const user = await this.users.findOne(userId);
+    if (email) {
+      user.email = email;
+      user.verified = false;
+      await this.verification.save(this.verification.create({ user }));
+    }
+    if (password) {
+      user.password = password;
+    }
+    return this.users.save(user);
   }
 }
