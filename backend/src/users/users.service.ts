@@ -14,6 +14,7 @@ import { Verification } from "./entities/verification.entity";
 import { relative } from "path";
 import { VerifyEmailOutput } from "./dtos/verify-email.dto";
 import { UserProfileOutPut } from "./dtos/user-profile.dto";
+import { MailService } from "src/mail/mail.service";
 
 @Injectable()
 export class UsersService {
@@ -22,6 +23,7 @@ export class UsersService {
     @InjectRepository(Verification)
     private readonly verification: Repository<Verification>,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
   ) {}
 
   async createAccount({
@@ -38,12 +40,12 @@ export class UsersService {
       const user = await this.users.save(
         this.users.create({ email, password, role }),
       );
-      await this.verification.save(
+      const newVerification = await this.verification.save(
         this.verification.create({
           user,
         }),
       );
-      await this.verification.save(this.verification.create({ user }));
+      this.mailService.sendVerificationEmail(user.email, newVerification.code);
       return { ok: true };
     } catch (e) {
       return { ok: false, error: "계정생성에 실패하였습니다" };
@@ -106,7 +108,13 @@ export class UsersService {
       if (email) {
         user.email = email;
         user.verified = false;
-        await this.verification.save(this.verification.create({ user }));
+        const newVerification = await this.verification.save(
+          this.verification.create({ user }),
+        );
+        this.mailService.sendVerificationEmail(
+          user.email,
+          newVerification.code,
+        );
       }
       if (password) {
         user.password = password;
@@ -131,6 +139,7 @@ export class UsersService {
       if (verification) {
         verification.user.verified = true;
         this.users.save(verification.user);
+        await this.verification.delete(verification.id);
         return { ok: true };
       }
       return { ok: false, error: "notfound" };
