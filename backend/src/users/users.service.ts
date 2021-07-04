@@ -34,6 +34,7 @@ export class UsersService {
     //check new user
     try {
       const exists = await this.users.findOne({ email });
+
       if (exists) {
         return { ok: false, error: "등록된 사용자가 있습니다" };
       }
