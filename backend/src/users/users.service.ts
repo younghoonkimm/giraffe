@@ -34,7 +34,6 @@ export class UsersService {
     //check new user
     try {
       const exists = await this.users.findOne({ email });
-
       if (exists) {
         return { ok: false, error: "등록된 사용자가 있습니다" };
       }
@@ -88,13 +87,12 @@ export class UsersService {
 
   async findById(id: number): Promise<UserProfileOutPut> {
     try {
-      const user = await this.users.findOne({ id });
-      if (user) {
-        return {
-          ok: true,
-          user: user,
-        };
-      }
+      const user = await this.users.findOneOrFail({ id });
+
+      return {
+        ok: true,
+        user: user,
+      };
     } catch (error) {
       return { ok: false, error: "User Not Found" };
     }

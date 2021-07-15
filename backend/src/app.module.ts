@@ -11,13 +11,15 @@ import * as Joi from "joi";
 import { join } from "path";
 
 import { UsersModule } from "./users/users.module";
-import { CommonModule } from "./common/common.module";
 import { User } from "./users/entities/user.entity";
 import { JwtModule } from "./jwt/jwt.module";
 import { JWTMiddlewares } from "./jwt/jwt.middlewares";
 import { AuthModule } from "./auth/auth.module";
 import { Verification } from "./users/entities/verification.entity";
 import { MailModule } from "./mail/mail.module";
+import { Restaurant } from "./restaurants/entities/restaurant.entity";
+import { Category } from "./restaurants/entities/category.entity";
+import { RestaurantsModule } from "./restaurants/restaurants.module";
 
 @Module({
   imports: [
@@ -47,7 +49,7 @@ import { MailModule } from "./mail/mail.module";
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== "prod",
       logging: process.env.NODE_ENV !== "prod",
-      entities: [User, Verification],
+      entities: [User, Verification, Restaurant, Category],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), "src/schema.gql"),
@@ -62,7 +64,8 @@ import { MailModule } from "./mail/mail.module";
       domain: process.env.MAIL_DOMAIN_NAME,
     }),
     UsersModule,
-    AuthModule,
+    // AuthModule,
+    RestaurantsModule,
   ],
   controllers: [],
   providers: [],
