@@ -37,4 +37,7 @@ export class Restaurant extends CoreEntity {
     onDelete: "CASCADE",
   })
   owner: User;
+
+  @RelationId((restaurant: Restaurant) => restaurant.owner)
+  ownerId: number;
 }

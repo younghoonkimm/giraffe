@@ -6,7 +6,7 @@ import {
   Field,
 } from "@nestjs/graphql";
 import { Restaurant } from "../entities/restaurant.entity";
-import { MutationOutput } from "src/common/dto/output.dto";
+import { CoreOutput } from "src/common/dto/output.dto";
 
 @InputType()
 export class CreateRestaurantInput extends PickType(Restaurant, [
@@ -19,4 +19,4 @@ export class CreateRestaurantInput extends PickType(Restaurant, [
 }
 
 @ObjectType()
-export class CreateRestaurantOutput extends MutationOutput {}
+export class CreateRestaurantOutput extends CoreOutput {}
