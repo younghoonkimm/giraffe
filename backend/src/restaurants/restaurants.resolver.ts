@@ -71,9 +71,8 @@ export class CategoryResolver {
   constructor(private readonly restaurantService: RestaurantService) {}
 
   @ResolveField(() => Int)
-  restaurantCount(@Parent() category: Category): number {
-    console.log(category);
-    return 80;
+  restaurantCount(@Parent() category: Category): Promise<number> {
+    return this.restaurantService.countRestaurant(category);
   }
 
   @Query(() => AllCategoriesOutput)
