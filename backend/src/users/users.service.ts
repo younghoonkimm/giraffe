@@ -88,7 +88,6 @@ export class UsersService {
   async findById(id: number): Promise<UserProfileOutPut> {
     try {
       const user = await this.users.findOneOrFail({ id });
-
       return {
         ok: true,
         user,
