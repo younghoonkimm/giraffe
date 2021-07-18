@@ -64,7 +64,7 @@ import { RestaurantsModule } from "./restaurants/restaurants.module";
       domain: process.env.MAIL_DOMAIN_NAME,
     }),
     UsersModule,
-    // AuthModule,
+    AuthModule,
     RestaurantsModule,
   ],
   controllers: [],
