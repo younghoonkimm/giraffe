@@ -106,6 +106,12 @@ type RestaurantsOutput {
   results: [Restaurant!]
 }
 
+type RestaurantOutput {
+  error: String
+  ok: Boolean!
+  restaurant: Restaurant
+}
+
 type Query {
   hi: Boolean!
   me: User!
@@ -113,6 +119,7 @@ type Query {
   allCategories: AllCategoriesOutput!
   category(input: CategoryInput!): CategoryOutput!
   restaurants(input: RestaurantsInput!): RestaurantsOutput!
+  restaurant(input: RestaurantInput!): RestaurantOutput!
 }
 
 input CategoryInput {
@@ -122,6 +129,10 @@ input CategoryInput {
 
 input RestaurantsInput {
   page: Float = 1
+}
+
+input RestaurantInput {
+  restaurantId: Int!
 }
 
 type Mutation {
