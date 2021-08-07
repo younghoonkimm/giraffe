@@ -251,9 +251,9 @@ export class RestaurantService {
       const [restaurants, totalResults] = await this.restaurants.findAndCount({
         where: {
           name: Like(`%${query}%`),
-          skip: (page - 1) * 25,
-          take: 25,
         },
+        skip: (page - 1) * 25,
+        take: 25,
       });
       return {
         ok: true,
