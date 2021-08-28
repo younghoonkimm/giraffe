@@ -18,6 +18,17 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Dish {
+  id: Float!
+  createdAt: DateTime!
+  updateAt: DateTime!
+  name: String!
+  price: Int!
+  photo: String!
+  description: String!
+  restaurant: Restaurant!
+}
+
 type Restaurant {
   id: Float!
   createdAt: DateTime!
@@ -26,6 +37,7 @@ type Restaurant {
   coverImg: String!
   address: String!
   category: Category
+  menu: [Dish!]
   owner: User!
 }
 
