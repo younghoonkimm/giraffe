@@ -140,15 +140,15 @@ export class DishResolver {
     @AuthUser() owner: User,
     @Args("input") editDishInput: EditDishInput,
   ): Promise<EditDishOutput> {
-    return;
+    return this.restaurantService.editDish(owner, editDishInput);
   }
 
-  @Mutation(() => DeleteDishInput)
+  @Mutation(() => DeleteDishOutput)
   @Role(["Owner"])
   deleteDish(
     @AuthUser() owner: User,
     @Args("input") deleteDishInput: DeleteDishInput,
-  ): Promise<EditDishOutput> {
+  ): Promise<DeleteDishOutput> {
     return this.restaurantService.deleteDish(owner, deleteDishInput);
   }
 }

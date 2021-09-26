@@ -371,6 +371,9 @@ export class RestaurantService {
         };
       }
       await this.dishes.delete(dishId);
+      return {
+        ok: true,
+      };
     } catch (error) {
       return {
         ok: false,

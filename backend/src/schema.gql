@@ -57,6 +57,7 @@ type User {
   role: UserRole!
   verified: Boolean!
   restaurants: [Restaurant!]!
+  orders: [Restaurant!]!
 }
 
 enum UserRole {
@@ -144,6 +145,16 @@ type CreateDishOutput {
   ok: Boolean!
 }
 
+type EditDishOutput {
+  error: String
+  ok: Boolean!
+}
+
+type DeleteDishOutput {
+  error: String
+  ok: Boolean!
+}
+
 type Query {
   hi: Boolean!
   me: User!
@@ -182,6 +193,8 @@ type Mutation {
   editRestaurant(input: EditRestaurantInput!): EditRestaurantOutput!
   deleteRestaurant(input: DeleteRestaurantInput!): EditRestaurantOutput!
   createDish(input: CreateDishInput!): CreateDishOutput!
+  editDish(input: EditDishInput!): EditDishOutput!
+  deleteDish(input: DeleteDishInput!): DeleteDishOutput!
 }
 
 input CreateAccountInput {
@@ -235,4 +248,16 @@ input DishOptionInputType {
   name: String!
   choices: [String!]
   extra: Int
+}
+
+input EditDishInput {
+  name: String
+  price: Int
+  description: String
+  options: [DishOptionInputType!]
+  dishId: Int!
+}
+
+input DeleteDishInput {
+  dishId: Int!
 }
