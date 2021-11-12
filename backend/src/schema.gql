@@ -36,6 +36,25 @@ type Dish {
   options: [DishOption!]
 }
 
+type Order {
+  id: Float!
+  createdAt: DateTime!
+  updateAt: DateTime!
+  customer: User
+  driver: User
+  restaurant: Restaurant!
+  dishes: [Dish!]!
+  total: Float
+  status: OrderStatus!
+}
+
+enum OrderStatus {
+  Pending
+  Cooking
+  PickedUp
+  Delivered
+}
+
 type Restaurant {
   id: Float!
   createdAt: DateTime!
@@ -45,6 +64,7 @@ type Restaurant {
   address: String!
   category: Category
   menu: [Dish!]
+  orders: [Order!]!
   owner: User!
 }
 
@@ -57,7 +77,8 @@ type User {
   role: UserRole!
   verified: Boolean!
   restaurants: [Restaurant!]!
-  orders: [Restaurant!]!
+  orders: [Order!]!
+  rides: [Order!]!
 }
 
 enum UserRole {
@@ -89,6 +110,11 @@ type EditProfileOutput {
 }
 
 type VerifyEmailOutput {
+  error: String
+  ok: Boolean!
+}
+
+type CreateOrderOutput {
   error: String
   ok: Boolean!
 }
@@ -195,6 +221,7 @@ type Mutation {
   createDish(input: CreateDishInput!): CreateDishOutput!
   editDish(input: EditDishInput!): EditDishOutput!
   deleteDish(input: DeleteDishInput!): DeleteDishOutput!
+  createOrder(input: CreateOrderInput!): CreateOrderOutput!
 }
 
 input CreateAccountInput {
@@ -260,4 +287,54 @@ input EditDishInput {
 
 input DeleteDishInput {
   dishId: Int!
+}
+
+input CreateOrderInput {
+  dishes: [DishInputType!]!
+  restaurantId: Int!
+}
+
+input DishInputType {
+  name: String!
+  price: Int!
+  photo: String
+  description: String!
+  restaurant: RestaurantInputType!
+  options: [DishOptionInputType!]
+}
+
+input RestaurantInputType {
+  name: String!
+  coverImg: String!
+  address: String!
+  category: CategoryInputType
+  menu: [DishInputType!]
+  orders: [OrderInputType!]!
+  owner: UserInputType!
+}
+
+input CategoryInputType {
+  name: String!
+  coverImg: String
+  slug: String!
+  restaurants: [RestaurantInputType!]!
+}
+
+input OrderInputType {
+  customer: UserInputType
+  driver: UserInputType
+  restaurant: RestaurantInputType!
+  dishes: [DishInputType!]!
+  total: Float
+  status: OrderStatus!
+}
+
+input UserInputType {
+  email: String!
+  password: String!
+  role: UserRole!
+  verified: Boolean!
+  restaurants: [RestaurantInputType!]!
+  orders: [OrderInputType!]!
+  rides: [OrderInputType!]!
 }
