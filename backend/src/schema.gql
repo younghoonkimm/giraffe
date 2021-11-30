@@ -18,9 +18,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type DishChoice {
+  name: String!
+  extra: Int
+}
+
 type DishOption {
   name: String!
-  choices: [String!]
+  choices: [DishChoice!]
   extra: Int
 }
 
@@ -36,14 +41,27 @@ type Dish {
   options: [DishOption!]
 }
 
+type OrderItemOption {
+  name: String!
+  choice: String
+}
+
+type OrderItem {
+  id: Float!
+  createdAt: DateTime!
+  updateAt: DateTime!
+  dish: Dish!
+  options: [OrderItemOption!]
+}
+
 type Order {
   id: Float!
   createdAt: DateTime!
   updateAt: DateTime!
   customer: User
   driver: User
-  restaurant: Restaurant!
-  dishes: [Dish!]!
+  restaurant: Restaurant
+  items: [OrderItem!]!
   total: Float
   status: OrderStatus!
 }
@@ -119,6 +137,18 @@ type CreateOrderOutput {
   ok: Boolean!
 }
 
+type GetOrdersOutput {
+  error: String
+  ok: Boolean!
+  orders: [Order!]
+}
+
+type GetOrderOutput {
+  error: String
+  ok: Boolean!
+  order: Order
+}
+
 type CreateRestaurantOutput {
   error: String
   ok: Boolean!
@@ -190,6 +220,8 @@ type Query {
   restaurants(input: RestaurantsInput!): RestaurantsOutput!
   restaurant(input: RestaurantInput!): RestaurantOutput!
   searchRestaurant(input: SearchRestaurantInput!): SearchRestaurantOutput!
+  getOrders(input: GetOrdersInput!): GetOrdersOutput!
+  getOrder(input: GetOrderInput!): GetOrderOutput!
 }
 
 input CategoryInput {
@@ -208,6 +240,14 @@ input RestaurantInput {
 input SearchRestaurantInput {
   page: Float = 1
   query: String!
+}
+
+input GetOrdersInput {
+  status: OrderStatus
+}
+
+input GetOrderInput {
+  id: Float!
 }
 
 type Mutation {
@@ -273,7 +313,12 @@ input CreateDishInput {
 
 input DishOptionInputType {
   name: String!
-  choices: [String!]
+  choices: [DishChoiceInputType!]
+  extra: Int
+}
+
+input DishChoiceInputType {
+  name: String!
   extra: Int
 }
 
@@ -290,51 +335,16 @@ input DeleteDishInput {
 }
 
 input CreateOrderInput {
-  dishes: [DishInputType!]!
   restaurantId: Int!
+  items: [CreateOrderItemInput!]!
 }
 
-input DishInputType {
+input CreateOrderItemInput {
+  dishId: Int!
+  options: [OrderItemOptionInputType!]
+}
+
+input OrderItemOptionInputType {
   name: String!
-  price: Int!
-  photo: String
-  description: String!
-  restaurant: RestaurantInputType!
-  options: [DishOptionInputType!]
-}
-
-input RestaurantInputType {
-  name: String!
-  coverImg: String!
-  address: String!
-  category: CategoryInputType
-  menu: [DishInputType!]
-  orders: [OrderInputType!]!
-  owner: UserInputType!
-}
-
-input CategoryInputType {
-  name: String!
-  coverImg: String
-  slug: String!
-  restaurants: [RestaurantInputType!]!
-}
-
-input OrderInputType {
-  customer: UserInputType
-  driver: UserInputType
-  restaurant: RestaurantInputType!
-  dishes: [DishInputType!]!
-  total: Float
-  status: OrderStatus!
-}
-
-input UserInputType {
-  email: String!
-  password: String!
-  role: UserRole!
-  verified: Boolean!
-  restaurants: [RestaurantInputType!]!
-  orders: [OrderInputType!]!
-  rides: [OrderInputType!]!
+  choice: String
 }

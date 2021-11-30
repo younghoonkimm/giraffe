@@ -16,8 +16,11 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  RelationId,
 } from "typeorm";
 import { Dish } from "src/restaurants/entities/dish.entitiy";
+import { OrderItem } from "./order-item";
+import { IsNumber, IsEnum } from "class-validator";
 
 export enum OrderStatus {
   Pending = "Pending",
@@ -39,6 +42,9 @@ export class Order extends CoreEntity {
   })
   customer?: User;
 
+  @RelationId((order: Order) => order.customer)
+  customerId: number;
+
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user) => user.rides, {
     onDelete: "SET NULL",
@@ -46,23 +52,28 @@ export class Order extends CoreEntity {
   })
   driver?: User;
 
-  @Field(() => Restaurant)
+  @RelationId((order: Order) => order.driver)
+  driverId: number;
+
+  @Field(() => Restaurant, { nullable: true })
   @ManyToOne(() => Restaurant, (restaurant) => restaurant.orders, {
     onDelete: "SET NULL",
     nullable: true,
   })
-  restaurant: Restaurant;
+  restaurant?: Restaurant;
 
-  @Field(() => [Dish])
-  @ManyToMany(() => Dish)
+  @Field(() => [OrderItem])
+  @ManyToMany(() => OrderItem)
   @JoinTable()
-  dishes: Dish[];
+  items: OrderItem[];
 
   @Column({ nullable: true })
   @Field(() => Float, { nullable: true })
+  @IsNumber()
   total?: number;
 
-  @Column({ type: "enum", enum: OrderStatus })
+  @Column({ type: "enum", enum: OrderStatus, default: OrderStatus.Pending })
   @Field(() => OrderStatus)
+  @IsEnum(OrderStatus)
   status: OrderStatus;
 }

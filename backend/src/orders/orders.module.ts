@@ -4,9 +4,14 @@ import { User } from "src/users/entities/user.entity";
 import { Order } from "./entities/order.entity";
 import { OrderService } from "./orders.service";
 import { OrderResolver } from "./orsers.resolver";
+import { Restaurant } from "src/restaurants/entities/restaurant.entity";
+import { OrderItem } from "./entities/order-item";
+import { Dish } from "src/restaurants/entities/dish.entitiy";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Order, User])],
+  imports: [
+    TypeOrmModule.forFeature([Order, User, Restaurant, OrderItem, Dish]),
+  ],
   providers: [OrderService, OrderResolver],
 })
 export class OrdersModule {}
