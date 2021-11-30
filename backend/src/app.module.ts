@@ -11,6 +11,7 @@ import * as Joi from "joi";
 import { join } from "path";
 
 import { UsersModule } from "./users/users.module";
+import { OrdersModule } from "./orders/orders.module";
 import { User } from "./users/entities/user.entity";
 import { JwtModule } from "./jwt/jwt.module";
 import { JWTMiddlewares } from "./jwt/jwt.middlewares";
@@ -21,7 +22,8 @@ import { Restaurant } from "./restaurants/entities/restaurant.entity";
 import { Category } from "./restaurants/entities/category.entity";
 import { RestaurantsModule } from "./restaurants/restaurants.module";
 import { Dish } from "./restaurants/entities/dish.entitiy";
-import { OrdersModule } from './orders/orders.module';
+import { Order } from "./orders/entities/order.entity";
+import { OrderItem } from "./orders/entities/order-item";
 
 @Module({
   imports: [
@@ -51,7 +53,15 @@ import { OrdersModule } from './orders/orders.module';
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== "prod",
       logging: process.env.NODE_ENV !== "prod",
-      entities: [User, Verification, Restaurant, Category, Dish],
+      entities: [
+        User,
+        Verification,
+        Restaurant,
+        Category,
+        Dish,
+        Order,
+        OrderItem,
+      ],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), "src/schema.gql"),

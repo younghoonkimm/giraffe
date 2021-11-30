@@ -52,6 +52,10 @@ export class User extends CoreEntity {
   @OneToMany(() => Order, (order) => order.customer)
   orders: Order[];
 
+  @Field(() => [Order])
+  @OneToMany(() => Order, (order) => order.driver)
+  rides: Order[];
+
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword(): Promise<void> {
