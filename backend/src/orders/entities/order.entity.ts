@@ -12,7 +12,6 @@ import { User } from "src/users/entities/user.entity";
 import {
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -25,6 +24,7 @@ import { IsNumber, IsEnum } from "class-validator";
 export enum OrderStatus {
   Pending = "Pending",
   Cooking = "Cooking",
+  Cooked = "Cooked",
   PickedUp = "PickedUp",
   Delivered = "Delivered",
 }
