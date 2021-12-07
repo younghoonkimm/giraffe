@@ -7,6 +7,7 @@ import { OrderResolver } from "./orsers.resolver";
 import { Restaurant } from "src/restaurants/entities/restaurant.entity";
 import { OrderItem } from "./entities/order-item";
 import { Dish } from "src/restaurants/entities/dish.entitiy";
+import { CommonModule } from "src/common/common.module";
 
 @Module({
   imports: [
