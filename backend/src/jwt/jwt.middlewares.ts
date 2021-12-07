@@ -6,7 +6,7 @@ import { UsersService } from "src/users/users.service";
 @Injectable()
 export class JWTMiddlewares implements NestMiddleware {
   constructor(
-    private readonly jwtServie: JwtService,
+    private readonly jwtService: JwtService,
     private readonly userService: UsersService,
   ) {}
   async use(req: Request, res: Response, next: NextFunction) {
@@ -14,7 +14,7 @@ export class JWTMiddlewares implements NestMiddleware {
       const token = req.headers["x-jwt"];
 
       try {
-        const decoded = this.jwtServie.verify(token.toString());
+        const decoded = this.jwtService.verify(token.toString());
 
         if (typeof decoded === "object" && decoded.hasOwnProperty("id")) {
           const id = decoded["id"];

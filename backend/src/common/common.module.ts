@@ -1,4 +1,18 @@
-import { Module } from '@nestjs/common';
+import { Module, Global } from "@nestjs/common";
 
-@Module({})
+import { PubSub } from "graphql-subscriptions";
+import { PUB_SUB } from "./common.constants";
+
+export const pubsub = new PubSub();
+
+@Global()
+@Module({
+  providers: [
+    {
+      provide: PUB_SUB,
+      useValue: pubsub,
+    },
+  ],
+  exports: [PUB_SUB],
+})
 export class CommonModule {}
