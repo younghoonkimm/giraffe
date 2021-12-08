@@ -87,6 +87,16 @@ type Restaurant {
   owner: User!
 }
 
+type Payment {
+  id: Float!
+  createdAt: DateTime!
+  updateAt: DateTime!
+  transactionId: String!
+  user: User!
+  restaurant: Restaurant!
+  restaurantId: Int!
+}
+
 type User {
   id: Float!
   createdAt: DateTime!
@@ -98,6 +108,7 @@ type User {
   restaurants: [Restaurant!]!
   orders: [Order!]!
   rides: [Order!]!
+  payments: [Payment!]!
 }
 
 enum UserRole {
@@ -222,6 +233,17 @@ type DeleteDishOutput {
   ok: Boolean!
 }
 
+type CreatePaymentOutput {
+  error: String
+  ok: Boolean!
+}
+
+type GetPaymentOutput {
+  error: String
+  ok: Boolean!
+  payments: [Payment!]
+}
+
 type Query {
   hi: Boolean!
   me: User!
@@ -233,6 +255,7 @@ type Query {
   searchRestaurant(input: SearchRestaurantInput!): SearchRestaurantOutput!
   getOrders(input: GetOrdersInput!): GetOrdersOutput!
   getOrder(input: GetOrderInput!): GetOrderOutput!
+  getPayments: GetPaymentOutput!
 }
 
 input CategoryInput {
@@ -275,6 +298,7 @@ type Mutation {
   createOrder(input: CreateOrderInput!): CreateOrderOutput!
   editOrder(input: EditOrderInput!): EditOrderOutput!
   takeOrder(input: TakeOrderInput!): TakeOrderOutput!
+  createPayment(input: CreatePaymentInput!): CreatePaymentOutput!
 }
 
 input CreateAccountInput {
@@ -369,6 +393,11 @@ input EditOrderInput {
 
 input TakeOrderInput {
   id: Float!
+}
+
+input CreatePaymentInput {
+  transactionId: String!
+  restaurantId: Int!
 }
 
 type Subscription {

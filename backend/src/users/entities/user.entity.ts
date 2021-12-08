@@ -11,6 +11,7 @@ import { InternalServerErrorException } from "@nestjs/common";
 import { IsBoolean, IsEmail, IsEnum, IsString } from "class-validator";
 import { Restaurant } from "src/restaurants/entities/restaurant.entity";
 import { Order } from "src/orders/entities/order.entity";
+import { Payment } from "src/payments/entities/payment.entity";
 
 export enum UserRole {
   Client = "Client",
@@ -67,6 +68,10 @@ export class User extends CoreEntity {
       }
     }
   }
+
+  @Field(() => [Payment])
+  @OneToMany(() => Payment, (payment) => payment.user, { eager: true })
+  payments: Payment[];
 
   async checkPassword(aPassword: string): Promise<boolean> {
     try {
