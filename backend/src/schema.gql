@@ -83,6 +83,8 @@ type Restaurant {
   address: String!
   category: Category
   menu: [Dish!]
+  isPromoted: Boolean!
+  promotedUtil: DateTime
   orders: [Order!]!
   owner: User!
 }

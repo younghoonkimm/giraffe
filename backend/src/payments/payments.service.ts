@@ -10,6 +10,7 @@ import {
 } from "./dtos/create-payment.dto";
 import { Restaurant } from "src/restaurants/entities/restaurant.entity";
 import { GetPaymentOutput } from "./dtos/get-payment.dto";
+import { Cron, SchedulerRegistry } from "@nestjs/schedule";
 
 @Injectable()
 export class PaymentService {
@@ -18,6 +19,7 @@ export class PaymentService {
     private readonly payments: Repository<Payment>,
     @InjectRepository(Restaurant)
     private readonly restaurants: Repository<Restaurant>,
+    private schedulerRegistry: SchedulerRegistry,
   ) {}
 
   async createPayment(
@@ -38,6 +40,11 @@ export class PaymentService {
           error: "You are not allowed to do this",
         };
       }
+      restaurant.isPromoted = true;
+      const date = new Date();
+      date.setDate(date.getDate() + 7);
+      restaurant.promotedUtil = date;
+      this.restaurants.save(restaurant);
       await this.payments.save(
         this.payments.create({
           transactionId,
@@ -71,4 +78,12 @@ export class PaymentService {
       };
     }
   }
+
+  // @Cron("30 * * * * *", {
+  //   name: "myJob",
+  // })
+  // checkForPayment() {
+  //   console.log("checking for payments");
+  //   const job = this.schedulerRegistry.getCronJob("myJob");
+  // }
 }
