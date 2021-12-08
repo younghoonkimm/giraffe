@@ -155,6 +155,11 @@ type EditOrderOutput {
   ok: Boolean!
 }
 
+type TakeOrderOutput {
+  error: String
+  ok: Boolean!
+}
+
 type CreateRestaurantOutput {
   error: String
   ok: Boolean!
@@ -269,7 +274,7 @@ type Mutation {
   deleteDish(input: DeleteDishInput!): DeleteDishOutput!
   createOrder(input: CreateOrderInput!): CreateOrderOutput!
   editOrder(input: EditOrderInput!): EditOrderOutput!
-  potatoReady: Boolean!
+  takeOrder(input: TakeOrderInput!): TakeOrderOutput!
 }
 
 input CreateAccountInput {
@@ -362,6 +367,16 @@ input EditOrderInput {
   status: OrderStatus!
 }
 
+input TakeOrderInput {
+  id: Float!
+}
+
 type Subscription {
-  readyPotato: String!
+  pendingOrders: Order!
+  cookedOrders: Order!
+  orderUpdates(input: OrderUpdatesInput!): Order!
+}
+
+input OrderUpdatesInput {
+  id: Float!
 }
