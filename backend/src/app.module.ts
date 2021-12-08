@@ -1,11 +1,7 @@
-import {
-  Module,
-  NestModule,
-  MiddlewareConsumer,
-  RequestMethod,
-} from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
+import { ScheduleModule } from "@nestjs/schedule";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import * as Joi from "joi";
 import { join } from "path";
@@ -25,6 +21,8 @@ import { Dish } from "./restaurants/entities/dish.entitiy";
 import { Order } from "./orders/entities/order.entity";
 import { OrderItem } from "./orders/entities/order-item";
 import { CommonModule } from "./common/common.module";
+import { PaymentsModule } from "./payments/payments.module";
+import { Payment } from "./payments/entities/payment.entity";
 
 @Module({
   imports: [
@@ -62,6 +60,7 @@ import { CommonModule } from "./common/common.module";
         Dish,
         Order,
         OrderItem,
+        Payment,
       ],
     }),
     GraphQLModule.forRoot({
@@ -74,6 +73,7 @@ import { CommonModule } from "./common/common.module";
         };
       },
     }),
+    ScheduleModule.forRoot(),
     JwtModule.forRoot({
       privateKey: process.env.PRIVATE_KEY,
     }),
@@ -87,6 +87,7 @@ import { CommonModule } from "./common/common.module";
     RestaurantsModule,
     OrdersModule,
     CommonModule,
+    PaymentsModule,
   ],
   controllers: [],
   providers: [],

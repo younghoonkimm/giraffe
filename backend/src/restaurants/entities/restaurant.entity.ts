@@ -38,6 +38,14 @@ export class Restaurant extends CoreEntity {
   @OneToMany(() => Dish, (dish) => dish.restaurant)
   menu: Dish[];
 
+  @Field(() => Boolean)
+  @Column({ default: false })
+  isPromoted: boolean;
+
+  @Field(() => Date, { nullable: true })
+  @Column({ nullable: true })
+  promotedUtil: Date;
+
   @Field(() => [Order])
   @OneToMany(() => Order, (order) => order.restaurant)
   orders: Order[];
