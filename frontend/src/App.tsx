@@ -1,12 +1,18 @@
+import { useQuery, useReactiveVar } from "@apollo/client";
 import React from "react";
-import logo from "./logo.svg";
+import LoggedOutRouter from "./routers/LoggedOutRouter";
+
+// const IS_LOGGED_IN = gql`
+//   query isLoggedIN {
+//     isLoggedIN @Client
+//   }
+// `;
+
+import { isLoggedInVar } from "./apollo";
 
 function App() {
-  return (
-    <div className="App bg-black">
-      <h1>tail</h1>
-    </div>
-  );
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
+  return <LoggedOutRouter></LoggedOutRouter>;
 }
 
 export default App;
