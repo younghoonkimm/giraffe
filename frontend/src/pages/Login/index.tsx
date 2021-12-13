@@ -24,34 +24,36 @@ const Login = () => {
 
   const onCompleted = (data: loginMutation) => {
     const {
-      login: { error, ok, token },
+      login: { ok, token },
     } = data;
 
     if (ok) {
       console.log(token);
-    } else {
-      if (error) console.log(error);
     }
   };
 
-  const onError = (error: ApolloError) => {};
+  // const onError = (error: ApolloError) => {};
 
-  const [loginMutation, { data }] = useMutation<loginMutation, loginMutationVariables>(LOGIN_MUTATION, {
-    onCompleted,
-    onError,
-  });
+  const [loginMutation, { data: loginMutationResult, loading }] = useMutation<loginMutation, loginMutationVariables>(
+    LOGIN_MUTATION,
+    {
+      onCompleted,
+    }
+  );
 
   const onSubmit = () => {
-    const { email, password } = getValues();
+    if (!loading) {
+      const { email, password } = getValues();
 
-    loginMutation({
-      variables: {
-        loginInput: {
-          email,
-          password,
+      loginMutation({
+        variables: {
+          loginInput: {
+            email,
+            password,
+          },
         },
-      },
-    });
+      });
+    }
   };
 
   return (
@@ -84,9 +86,9 @@ const Login = () => {
           />
           {errors.password?.type === "minLength" && <FormError errorMessage="Password must be more than 10 chars" />}
           <button className="btn" type="submit">
-            Login
+            {loading ? "Loading..." : "Login"}
           </button>
-          {data?.login.error && <FormError errorMessage={data.login.error} />}
+          {loginMutationResult?.login.error && <FormError errorMessage={loginMutationResult?.login.error} />}
         </form>
       </div>
     </div>
