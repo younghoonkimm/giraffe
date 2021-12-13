@@ -12,19 +12,18 @@ import { User } from "src/users/entities/user.entity";
 import {
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
   RelationId,
 } from "typeorm";
-import { Dish } from "src/restaurants/entities/dish.entitiy";
 import { OrderItem } from "./order-item";
 import { IsNumber, IsEnum } from "class-validator";
 
 export enum OrderStatus {
   Pending = "Pending",
   Cooking = "Cooking",
+  Cooked = "Cooked",
   PickedUp = "PickedUp",
   Delivered = "Delivered",
 }
@@ -39,6 +38,7 @@ export class Order extends CoreEntity {
   @ManyToOne(() => User, (user) => user.orders, {
     onDelete: "SET NULL",
     nullable: true,
+    eager: true,
   })
   customer?: User;
 
@@ -49,6 +49,7 @@ export class Order extends CoreEntity {
   @ManyToOne(() => User, (user) => user.rides, {
     onDelete: "SET NULL",
     nullable: true,
+    eager: true,
   })
   driver?: User;
 
@@ -59,11 +60,12 @@ export class Order extends CoreEntity {
   @ManyToOne(() => Restaurant, (restaurant) => restaurant.orders, {
     onDelete: "SET NULL",
     nullable: true,
+    eager: true,
   })
   restaurant?: Restaurant;
 
   @Field(() => [OrderItem])
-  @ManyToMany(() => OrderItem)
+  @ManyToMany(() => OrderItem, { eager: true })
   @JoinTable()
   items: OrderItem[];
 

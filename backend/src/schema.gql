@@ -69,6 +69,7 @@ type Order {
 enum OrderStatus {
   Pending
   Cooking
+  Cooked
   PickedUp
   Delivered
 }
@@ -82,8 +83,20 @@ type Restaurant {
   address: String!
   category: Category
   menu: [Dish!]
+  isPromoted: Boolean!
+  promotedUtil: DateTime
   orders: [Order!]!
   owner: User!
+}
+
+type Payment {
+  id: Float!
+  createdAt: DateTime!
+  updateAt: DateTime!
+  transactionId: String!
+  user: User!
+  restaurant: Restaurant!
+  restaurantId: Int!
 }
 
 type User {
@@ -97,6 +110,7 @@ type User {
   restaurants: [Restaurant!]!
   orders: [Order!]!
   rides: [Order!]!
+  payments: [Payment!]!
 }
 
 enum UserRole {
@@ -147,6 +161,16 @@ type GetOrderOutput {
   error: String
   ok: Boolean!
   order: Order
+}
+
+type EditOrderOutput {
+  error: String
+  ok: Boolean!
+}
+
+type TakeOrderOutput {
+  error: String
+  ok: Boolean!
 }
 
 type CreateRestaurantOutput {
@@ -211,6 +235,17 @@ type DeleteDishOutput {
   ok: Boolean!
 }
 
+type CreatePaymentOutput {
+  error: String
+  ok: Boolean!
+}
+
+type GetPaymentOutput {
+  error: String
+  ok: Boolean!
+  payments: [Payment!]
+}
+
 type Query {
   hi: Boolean!
   me: User!
@@ -222,6 +257,7 @@ type Query {
   searchRestaurant(input: SearchRestaurantInput!): SearchRestaurantOutput!
   getOrders(input: GetOrdersInput!): GetOrdersOutput!
   getOrder(input: GetOrderInput!): GetOrderOutput!
+  getPayments: GetPaymentOutput!
 }
 
 input CategoryInput {
@@ -262,6 +298,9 @@ type Mutation {
   editDish(input: EditDishInput!): EditDishOutput!
   deleteDish(input: DeleteDishInput!): DeleteDishOutput!
   createOrder(input: CreateOrderInput!): CreateOrderOutput!
+  editOrder(input: EditOrderInput!): EditOrderOutput!
+  takeOrder(input: TakeOrderInput!): TakeOrderOutput!
+  createPayment(input: CreatePaymentInput!): CreatePaymentOutput!
 }
 
 input CreateAccountInput {
@@ -347,4 +386,28 @@ input CreateOrderItemInput {
 input OrderItemOptionInputType {
   name: String!
   choice: String
+}
+
+input EditOrderInput {
+  id: Float!
+  status: OrderStatus!
+}
+
+input TakeOrderInput {
+  id: Float!
+}
+
+input CreatePaymentInput {
+  transactionId: String!
+  restaurantId: Int!
+}
+
+type Subscription {
+  pendingOrders: Order!
+  cookedOrders: Order!
+  orderUpdates(input: OrderUpdatesInput!): Order!
+}
+
+input OrderUpdatesInput {
+  id: Float!
 }
