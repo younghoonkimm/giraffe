@@ -1,6 +1,18 @@
+import { ApolloError, gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import FormError from "../../components/FormError";
 import { LogOutForm } from "./type";
+import { loginMutation, loginMutationVariables } from "../../__generated__/loginMutation";
+
+const LOGIN_MUTATION = gql`
+  mutation loginMutation($loginInput: LoginInput!) {
+    login(input: $loginInput) {
+      ok
+      token
+      error
+    }
+  }
+`;
 
 const Login = () => {
   const {
@@ -10,8 +22,36 @@ const Login = () => {
     formState: { errors },
   } = useForm<LogOutForm>();
 
+  const onCompleted = (data: loginMutation) => {
+    const {
+      login: { error, ok, token },
+    } = data;
+
+    if (ok) {
+      console.log(token);
+    } else {
+      if (error) console.log(error);
+    }
+  };
+
+  const onError = (error: ApolloError) => {};
+
+  const [loginMutation, { data }] = useMutation<loginMutation, loginMutationVariables>(LOGIN_MUTATION, {
+    onCompleted,
+    onError,
+  });
+
   const onSubmit = () => {
-    console.log(getValues());
+    const { email, password } = getValues();
+
+    loginMutation({
+      variables: {
+        loginInput: {
+          email,
+          password,
+        },
+      },
+    });
   };
 
   return (
@@ -46,6 +86,7 @@ const Login = () => {
           <button className="btn" type="submit">
             Login
           </button>
+          {data?.login.error && <FormError errorMessage={data.login.error} />}
         </form>
       </div>
     </div>
