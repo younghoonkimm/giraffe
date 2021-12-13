@@ -3,17 +3,16 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { isLoggedInVar } from "../../apollo";
-import { LogOutForm } from "./type";
 import Login from "../../pages/Login";
 import CreateAccount from "../../pages/CreateAccount";
 
-function LogOutRouter() {
+const LogOutRouter = () => {
   const {
     register,
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<LogOutForm>();
+  } = useForm();
 
   const onSubmit = () => {
     console.log(watch());
@@ -48,19 +47,19 @@ function LogOutRouter() {
     //     </div>
     //     <div>
     //       <input
-    //         {...register("password", {
-    //           minLength: 5,
-    //         })}
-    //         name="password"
-    //         type="password"
-    //         required
-    //         placeholder="password"
+    // {...register("password", {
+    //   minLength: 5,
+    // })}
+    // name="password"
+    // type="password"
+    // required
+    // placeholder="password"
     //       />
     //     </div>
     //     <button className="bg-yellow-300 text-white">Submit</button>
     //   </form>
     // </div>
   );
-}
+};
 
 export default LogOutRouter;
