@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import Helmet from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 import FormError from "../../components/FormError";
 import Button from "../../components/Button";
@@ -64,7 +64,6 @@ const CreateAccount = () => {
         },
       });
     }
-    console.log(getValues());
   };
 
   return (
