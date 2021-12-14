@@ -1,5 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
+import Helmet from "react-helmet";
+
 import FormError from "../../components/FormError";
 import { LogOutForm } from "./type";
 import { loginMutation, loginMutationVariables } from "../../__generated__/loginMutation";
@@ -59,6 +61,9 @@ const Login = () => {
 
   return (
     <div className="h-screen flex items-center flex-col lg:mt-28 mt-10">
+      <Helmet>
+        <title>Login | NuerEats</title>
+      </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
         <img className="w-52 mb-10" src={Logo} alt="logo" />
         <h4 className="text-left w-full text-2xl font-medium">Welcome back</h4>
