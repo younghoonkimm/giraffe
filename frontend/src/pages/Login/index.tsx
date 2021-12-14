@@ -1,11 +1,15 @@
 import { gql, useMutation } from "@apollo/client";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Helmet from "react-helmet";
 
 import FormError from "../../components/FormError";
+import Button from "../../components/Button";
 import { LogOutForm } from "./type";
 import { loginMutation, loginMutationVariables } from "../../__generated__/loginMutation";
 import Logo from "../../images/logo.svg";
+import { authToken, isLoggedInVar } from "../../apollo";
+import { LOCALSTORAGE_TOKEN } from "../../constants";
 
 const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
@@ -22,20 +26,21 @@ const Login = () => {
     register,
     getValues,
     handleSubmit,
+    formState,
     formState: { errors },
-  } = useForm<LogOutForm>();
+  } = useForm<LogOutForm>({ mode: "onChange" });
 
   const onCompleted = (data: loginMutation) => {
     const {
       login: { ok, token },
     } = data;
 
-    if (ok) {
-      console.log(token);
+    if (ok && token) {
+      localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+      authToken(token);
+      isLoggedInVar(true);
     }
   };
-
-  // const onError = (error: ApolloError) => {};
 
   const [loginMutation, { data: loginMutationResult, loading }] = useMutation<loginMutation, loginMutationVariables>(
     LOGIN_MUTATION,
@@ -67,12 +72,12 @@ const Login = () => {
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
         <img className="w-52 mb-10" src={Logo} alt="logo" />
         <h4 className="text-left w-full text-2xl font-medium">Welcome back</h4>
-        <form className="grid gap-3 mt-5 w-full" onSubmit={handleSubmit(onSubmit)}>
+        <form className="grid gap-3 mt-5 mb-3 w-full" onSubmit={handleSubmit(onSubmit)}>
           <input
             className="input"
             {...register("email", {
               required: "This is required",
-              pattern: /^[A-Za-z0-9._%+-]+@gmail.com$/,
+              pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             })}
             name="email"
             type="email"
@@ -92,11 +97,15 @@ const Login = () => {
             placeholder="Password"
           />
           {errors.password?.type === "minLength" && <FormError errorMessage="Password must be more than 10 chars" />}
-          <button className="btn" type="submit">
-            {loading ? "Loading..." : "Login"}
-          </button>
+          <Button canClick={formState.isValid} loading={loading} actionText="login" buttonType="submit" />
           {loginMutationResult?.login.error && <FormError errorMessage={loginMutationResult?.login.error} />}
         </form>
+        <div>
+          New to Giraffe?{" "}
+          <Link to="/create-account" className="text-lime-600 hover:underline">
+            Create account
+          </Link>
+        </div>
       </div>
     </div>
   );

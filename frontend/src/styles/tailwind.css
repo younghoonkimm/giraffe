@@ -12,7 +12,7 @@
 }
 
 .btn {
-  @apply px-5 text-white focus:outline-none bg-green-600 text-white py-4 hover:bg-green-800 transition-colors text-lg font-medium;
+  @apply px-5 text-white focus:outline-none bg-lime-600 text-white py-4 hover:bg-lime-700 transition-colors text-lg font-medium;
 }
 
 @tailwind utilities;
