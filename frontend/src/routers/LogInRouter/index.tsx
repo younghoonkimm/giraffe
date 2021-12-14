@@ -1,21 +1,9 @@
-import { gql, useQuery } from "@apollo/client";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
 import Restaurants from "../../pages/Restaurants";
 import Header from "../../components/Header";
+import { useMe } from "../../hooks/useMe";
 import { UserRole } from "../../__generated__/globalTypes";
-import { meQuery } from "../../__generated__/meQuery";
-
-const ME_QUERY = gql`
-  query meQuery {
-    me {
-      id
-      email
-      role
-      verified
-    }
-  }
-`;
 
 const clientRoutes = [
   {
@@ -29,7 +17,7 @@ const clientRoutes = [
 ];
 
 const LoginRouter = () => {
-  const { data, loading, error } = useQuery<meQuery>(ME_QUERY);
+  const { data, loading, error } = useMe();
 
   console.log(data?.me.role === "Client", loading);
   if (!data || loading || error) {
