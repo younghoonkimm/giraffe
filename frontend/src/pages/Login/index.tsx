@@ -1,8 +1,9 @@
-import { ApolloError, gql, useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import FormError from "../../components/FormError";
 import { LogOutForm } from "./type";
 import { loginMutation, loginMutationVariables } from "../../__generated__/loginMutation";
+import Logo from "../../images/logo.svg";
 
 const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
@@ -57,10 +58,11 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-800">
-      <div className="bg-white w-full max-w-lg pt-10 pb-7 rounded-lg text-center">
-        <h3 className="font-bold text-3xl text-gray-800">Log In</h3>
-        <form className="grid gap-3 mt-5 px-5" onSubmit={handleSubmit(onSubmit)}>
+    <div className="h-screen flex items-center flex-col lg:mt-28 mt-10">
+      <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
+        <img className="w-52 mb-10" src={Logo} alt="logo" />
+        <h4 className="text-left w-full text-2xl font-medium">Welcome back</h4>
+        <form className="grid gap-3 mt-5 w-full" onSubmit={handleSubmit(onSubmit)}>
           <input
             className="input"
             {...register("email", {
