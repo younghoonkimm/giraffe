@@ -117,6 +117,7 @@ export class UsersService {
       if (password) {
         user.password = password;
       }
+      await this.users.save(user);
       return {
         ok: true,
       };
