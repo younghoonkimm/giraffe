@@ -15,4 +15,8 @@
   @apply px-5 text-white focus:outline-none bg-lime-600 text-white py-4 hover:bg-lime-700 transition-colors text-lg font-medium;
 }
 
+.form {
+  @apply grid gap-3 mt-5 mb-3 w-full;
+}
+
 @tailwind utilities;

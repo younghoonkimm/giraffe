@@ -4,6 +4,8 @@ import Restaurants from "../../pages/Restaurants";
 import Header from "../../components/Header";
 import { useMe } from "../../hooks/useMe";
 import { UserRole } from "../../__generated__/globalTypes";
+import ConfirmEmail from "../../pages/ConfirmEmail";
+import EditProfile from "../../pages/EditProfile";
 
 const clientRoutes = [
   {
@@ -11,8 +13,12 @@ const clientRoutes = [
     component: <Restaurants />,
   },
   {
-    path: "/",
-    component: <Restaurants />,
+    path: "/confirm",
+    component: <ConfirmEmail />,
+  },
+  {
+    path: "/edit-profile",
+    component: <EditProfile />,
   },
 ];
 
@@ -34,7 +40,7 @@ const LoginRouter = () => {
       <Routes>
         {data.me.role === UserRole.Client &&
           clientRoutes.map((route: any) => <Route key={route.path} path={route.path} element={route.component} />)}
-        <Route path="*" element={<Navigate replace to="/" />} />
+        {/* <Route path="*" element={<Navigate replace to="/" />} /> */}
       </Routes>
     </Router>
   );

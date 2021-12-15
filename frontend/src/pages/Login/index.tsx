@@ -72,7 +72,7 @@ const Login = () => {
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
         <img className="w-52 mb-10" src={Logo} alt="logo" />
         <h4 className="text-left w-full text-2xl font-medium">Welcome back</h4>
-        <form className="grid gap-3 mt-5 mb-3 w-full" onSubmit={handleSubmit(onSubmit)}>
+        <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <input
             className="input"
             {...register("email", {
