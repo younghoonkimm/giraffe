@@ -124,7 +124,7 @@ export class UsersService {
     } catch (error) {
       return {
         ok: false,
-        error,
+        error: "Could not update profile.",
       };
     }
   }
@@ -141,9 +141,9 @@ export class UsersService {
         await this.verification.delete(verification.id);
         return { ok: true };
       }
-      return { ok: false, error: "notfound" };
+      return { ok: false, error: "Verfication is not found" };
     } catch (error) {
-      return { ok: false, error };
+      return { ok: false, error: "Could not verify email" };
     }
   }
 }
