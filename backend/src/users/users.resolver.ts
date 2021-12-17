@@ -16,11 +16,6 @@ import { Role } from "src/auth/role.decorator";
 export class UsersResolver {
   constructor(private readonly userService: UsersService) {}
 
-  @Query(() => Boolean)
-  hi() {
-    return true;
-  }
-
   @Mutation(() => CreateAccountOutput)
   async createAccount(
     @Args("input") createAccountInput: CreateAccountInput,
