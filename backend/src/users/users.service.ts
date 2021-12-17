@@ -11,7 +11,6 @@ import { LoginInput, LoginOutput } from "./dtos/login.dto";
 import { JwtService } from "src/jwt/jwt.service";
 import { EditProfileInput, EditProfileOutput } from "./dtos/edit-profile.dto";
 import { Verification } from "./entities/verification.entity";
-import { relative } from "path";
 import { VerifyEmailOutput } from "./dtos/verify-email.dto";
 import { UserProfileOutPut } from "./dtos/user-profile.dto";
 import { MailService } from "src/mail/mail.service";
@@ -93,7 +92,7 @@ export class UsersService {
         user,
       };
     } catch (error) {
-      return { ok: false, error: "User Not Found" };
+      return { ok: false, error: "User not found" };
     }
   }
 
@@ -138,7 +137,8 @@ export class UsersService {
       if (verification) {
         verification.user.verified = true;
         this.users.save(verification.user);
-        await this.verification.delete(verification.id);
+        await this.verification.delete({ user: { id: verification.id } });
+
         return { ok: true };
       }
       return { ok: false, error: "Verfication is not found" };

@@ -247,7 +247,6 @@ type GetPaymentOutput {
 }
 
 type Query {
-  hi: Boolean!
   me: User!
   userProfile(userId: Float!): UserProfileOutPut!
   allCategories: AllCategoriesOutput!
