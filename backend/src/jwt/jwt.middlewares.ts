@@ -23,19 +23,8 @@ export class JWTMiddlewares implements NestMiddleware {
             req["user"] = user;
           }
         }
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     }
     next();
   }
 }
-
-// export function JWTMiddlewares(
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) {
-//   console.log(req.headers);
-//   next();
-// }
