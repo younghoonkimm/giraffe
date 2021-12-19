@@ -42,6 +42,8 @@ const Restaurants = () => {
     },
   });
 
+  console.log(data);
+
   return (
     <div>
       <form className="bg-gray-800 w-full py-40 flex items-center justify-center">
@@ -51,9 +53,14 @@ const Restaurants = () => {
         <div className="max-w-screen-2xl mx-auto mt-8">
           <div className="flex justify-around max-w-sm mx-auto">
             {data?.allCategories.categories?.map((category) => (
-              <div className="flex flex-column items-center">
-                <div className="w-14 h-14 rounded-full bg-gray-100"></div>
-                <div key={category.id}>{category.name}</div>
+              <div className="flex flex-col items-center group cursor-pointer">
+                <div
+                  className="w-14 h-14 rounded-full bg-cover group-hover:bg-gray-200"
+                  style={{ backgroundImage: category.coverImg ? `url(${category.coverImg})` : "#000" }}
+                />
+                <span className="mt-3 text-sm text-center font-medium" key={category.id}>
+                  {category.name}
+                </span>
               </div>
             ))}
           </div>
