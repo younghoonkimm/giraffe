@@ -184,7 +184,7 @@ describe("UserService", () => {
       usersRepository.findOneOrFail.mockRejectedValue(new Error());
       const result = await service.findById(1);
 
-      expect(result).toEqual({ ok: false, error: "User Not Found" });
+      expect(result).toEqual({ ok: false, error: "User not found" });
     });
   });
 
@@ -269,9 +269,9 @@ describe("UserService", () => {
       expect(usersRepository.save).toHaveBeenCalledWith({ verified: true });
 
       expect(verificationsRepository.delete).toHaveBeenCalledTimes(1);
-      expect(verificationsRepository.delete).toHaveBeenCalledWith(
-        mockedVerification.id,
-      );
+      expect(verificationsRepository.delete).toHaveBeenCalledWith({
+        user: { id: 1 },
+      });
 
       expect(result).toEqual({ ok: true });
     });
