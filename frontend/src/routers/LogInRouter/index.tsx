@@ -8,6 +8,7 @@ import ConfirmEmail from "../../pages/ConfirmEmail";
 import EditProfile from "../../pages/EditProfile";
 import SearchPage from "../../pages/SearchPage";
 import Category from "../../pages/Category";
+import Restaurant from "../../pages/Restaurant";
 
 const clientRoutes = [
   {
@@ -29,6 +30,10 @@ const clientRoutes = [
   {
     path: "/category/:slug",
     component: <Category />,
+  },
+  {
+    path: "/restaurants/:id",
+    component: <Restaurant />,
   },
 ];
 
