@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, createSearchParams } from "react-router-dom";
+import { useNavigate, createSearchParams, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { gql, useQuery } from "@apollo/client";
 import { Helmet } from "react-helmet-async";
@@ -94,14 +94,14 @@ const Restaurants = () => {
           <div className="px-20">
             <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
               {data?.restaurants.results?.map((restaurant) => (
-                <div key={restaurant.id}>
+                <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
                   <Restaurant
                     id={restaurant.id + ""}
                     name={restaurant.name}
                     categoryName={restaurant.category?.name}
                     coverImg={restaurant.coverImg}
                   />
-                </div>
+                </Link>
               ))}
             </div>
           </div>
