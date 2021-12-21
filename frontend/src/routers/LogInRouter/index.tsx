@@ -6,6 +6,7 @@ import { useMe } from "../../hooks/useMe";
 import { UserRole } from "../../__generated__/globalTypes";
 import ConfirmEmail from "../../pages/ConfirmEmail";
 import EditProfile from "../../pages/EditProfile";
+import SearchPage from "../../pages/SearchPage";
 
 const clientRoutes = [
   {
@@ -19,6 +20,10 @@ const clientRoutes = [
   {
     path: "/edit-profile",
     component: <EditProfile />,
+  },
+  {
+    path: "/search",
+    component: <SearchPage />,
   },
 ];
 
