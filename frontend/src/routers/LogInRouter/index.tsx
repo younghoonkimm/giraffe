@@ -7,6 +7,7 @@ import { UserRole } from "../../__generated__/globalTypes";
 import ConfirmEmail from "../../pages/ConfirmEmail";
 import EditProfile from "../../pages/EditProfile";
 import SearchPage from "../../pages/SearchPage";
+import Category from "../../pages/Category";
 
 const clientRoutes = [
   {
@@ -25,12 +26,15 @@ const clientRoutes = [
     path: "/search",
     component: <SearchPage />,
   },
+  {
+    path: "/category/:slug",
+    component: <Category />,
+  },
 ];
 
 const LoginRouter = () => {
   const { data, loading, error } = useMe();
 
-  console.log(data?.me.role === "Client", loading);
   if (!data || loading || error) {
     return (
       <div className="h-screen flex justify-center items-center">
