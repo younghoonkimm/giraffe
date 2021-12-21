@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { Helmet } from "react-helmet-async";
 
 import Categories from "../../components/Categories";
@@ -9,6 +9,7 @@ import Restaurant from "../../components/Restaurant";
 import { restaurantsPageQuery, restaurantsPageQueryVariables } from "../../__generated__/restaurantsPageQuery";
 
 import { SearchFormProps } from "./type";
+import { CATEGORY_FRAGMENT, RESTAURANT_FRAGMENT } from "../../fragment";
 
 const RESTAURANTS_QUERY = gql`
   query restaurantsPageQuery($input: RestaurantsInput!) {
@@ -16,11 +17,7 @@ const RESTAURANTS_QUERY = gql`
       ok
       error
       categories {
-        id
-        name
-        coverImg
-        slug
-        restaurantCount
+        ...CategoryParts
       }
     }
     restaurants(input: $input) {
@@ -29,17 +26,12 @@ const RESTAURANTS_QUERY = gql`
       totalPages
       totalResults
       results {
-        id
-        name
-        coverImg
-        category {
-          name
-        }
-        address
-        isPromoted
+        ...RestaurantParts
       }
     }
   }
+  ${RESTAURANT_FRAGMENT}
+  ${CATEGORY_FRAGMENT}
 `;
 
 const Restaurants = () => {
@@ -47,7 +39,7 @@ const Restaurants = () => {
   const { register, handleSubmit, getValues } = useForm<SearchFormProps>();
   const navigate = useNavigate();
 
-  const { data, loading, error } = useQuery<restaurantsPageQuery, restaurantsPageQueryVariables>(RESTAURANTS_QUERY, {
+  const { data, loading } = useQuery<restaurantsPageQuery, restaurantsPageQueryVariables>(RESTAURANTS_QUERY, {
     variables: {
       input: {
         page,
