@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
-const NotFound = () => (
+export const NotFound = () => (
   <div className="h-screen flex flex-col items-center justify-center">
     <Helmet>
       <title>Not Found | NuerEats</title>
@@ -13,5 +13,3 @@ const NotFound = () => (
     </Link>
   </div>
 );
-
-export default NotFound;
