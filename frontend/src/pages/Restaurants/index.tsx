@@ -5,7 +5,7 @@ import { gql, useQuery } from "@apollo/client";
 import { Helmet } from "react-helmet-async";
 
 import Categories from "../../components/Categories";
-import Restaurant from "../../components/Restaurant";
+import { Restaurant } from "../../components/Restaurant";
 import { restaurantsPageQuery, restaurantsPageQueryVariables } from "../../__generated__/restaurantsPageQuery";
 
 import { SearchFormProps } from "./type";
@@ -96,7 +96,7 @@ const Restaurants = () => {
               {data?.restaurants.results?.map((restaurant) => (
                 <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
                   <Restaurant
-                    id={restaurant.id + ""}
+                    // id={restaurant.id + ""}
                     name={restaurant.name}
                     categoryName={restaurant.category?.name}
                     coverImg={restaurant.coverImg}
