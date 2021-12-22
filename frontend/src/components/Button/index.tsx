@@ -1,7 +1,7 @@
 import React from "react";
 import { ButtonProps } from "./type";
 
-const Button: React.FC<ButtonProps> = ({ buttonType, canClick, loading, actionText }) => (
+export const Button: React.FC<ButtonProps> = ({ buttonType, canClick, loading, actionText }) => (
   <button
     type={buttonType}
     className={`text-lg font-medium focus:outline-none text-white py-4  transition-colors ${
@@ -11,5 +11,3 @@ const Button: React.FC<ButtonProps> = ({ buttonType, canClick, loading, actionTe
     {loading ? "Loading..." : actionText}
   </button>
 );
-
-export default Button;
