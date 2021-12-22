@@ -21,7 +21,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const Login = () => {
+export const Login = () => {
   const {
     register,
     getValues,
@@ -110,5 +110,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;
