@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 
-import FormError from "../../components/FormError";
-import Button from "../../components/Button";
+import { FormError } from "../../components/FormError";
+import { Button } from "../../components/Button";
 import { LogOutForm } from "./type";
 import { loginMutation, loginMutationVariables } from "../../__generated__/loginMutation";
 import Logo from "../../images/logo.svg";

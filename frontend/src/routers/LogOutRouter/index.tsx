@@ -4,7 +4,7 @@ import Login from "../../pages/Login";
 import CreateAccount from "../../pages/CreateAccount";
 import NotFound from "../../pages/NotFound";
 
-const LogOutRouter = () => {
+export const LogOutRouter = () => {
   return (
     <Router>
       <Routes>
@@ -15,5 +15,3 @@ const LogOutRouter = () => {
     </Router>
   );
 };
-
-export default LogOutRouter;

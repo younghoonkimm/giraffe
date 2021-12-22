@@ -35,7 +35,8 @@
     "start": "npm run apollo:codegen & npm run tailwind:build & react-scripts start",
     "build": "react-scripts build",
     "apollo:codegen": "rimraf src/__generated__ && apollo client:codegen src/__generated__ --target=typescript --outputFlat",
-    "test": "react-scripts test",
+    "test": "react-scripts test --verbose",
+    "test:coverage": "npm test -- --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -58,5 +59,12 @@
   },
   "devDependencies": {
     "typescript": "^4.5.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "./src/components/**/*.tsx",
+      "./src/pages/**/*.tsx",
+      "./src/routers/**/*.tsx"
+    ]
   }
 }
