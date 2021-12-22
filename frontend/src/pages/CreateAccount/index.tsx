@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 
-import FormError from "../../components/FormError";
-import Button from "../../components/Button";
+import { FormError } from "../../components/FormError";
+import { Button } from "../../components/Button";
 import { CreateAccountForm } from "./type";
 import { UserRole } from "../../__generated__/globalTypes";
 import Logo from "../../images/logo.svg";
