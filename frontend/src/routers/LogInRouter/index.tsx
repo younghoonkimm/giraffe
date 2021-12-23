@@ -7,7 +7,7 @@ import { UserRole } from "../../__generated__/globalTypes";
 import ConfirmEmail from "../../pages/ConfirmEmail";
 import EditProfile from "../../pages/EditProfile";
 import SearchPage from "../../pages/SearchPage";
-import Category from "../../pages/Category";
+import { Category } from "../../pages/Category";
 import Restaurant from "../../pages/Restaurant";
 
 const clientRoutes = [

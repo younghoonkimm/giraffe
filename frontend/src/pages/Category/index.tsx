@@ -5,7 +5,7 @@ import { gql, useLazyQuery } from "@apollo/client";
 import { CATEGORY_FRAGMENT, RESTAURANT_FRAGMENT } from "../../fragment";
 import { category, categoryVariables } from "../../__generated__/category";
 
-const CATEGORY_QUERY = gql`
+export const CATEGORY_QUERY = gql`
   query category($input: CategoryInput!) {
     category(input: $input) {
       ok
@@ -24,11 +24,11 @@ const CATEGORY_QUERY = gql`
   ${CATEGORY_FRAGMENT}
 `;
 
-const Category = () => {
+export const Category = () => {
   const params = useParams();
   const { slug } = params;
 
-  const [queryReadyToStart, { data, loading }] = useLazyQuery<category, categoryVariables>(CATEGORY_QUERY);
+  const [queryReadyToStart, { data }] = useLazyQuery<category, categoryVariables>(CATEGORY_QUERY);
 
   useEffect(() => {
     if (slug) {
@@ -41,16 +41,13 @@ const Category = () => {
         },
       });
     }
-    console.log(data);
   }, []);
 
   return (
     <div>
       <Helmet>
-        <title>Search | NuerEats</title>
+        <title>Category | Giraffe</title>
       </Helmet>
     </div>
   );
 };
-
-export default Category;

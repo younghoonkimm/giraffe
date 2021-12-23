@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { gql, useQuery } from "@apollo/client";
 import { Helmet } from "react-helmet-async";
 
-import Categories from "../../components/Categories";
+import { Categories } from "../../components/Categories";
 import { Restaurant } from "../../components/Restaurant";
 import { restaurantsPageQuery, restaurantsPageQueryVariables } from "../../__generated__/restaurantsPageQuery";
 
