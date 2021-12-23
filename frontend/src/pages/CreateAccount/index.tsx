@@ -23,7 +23,6 @@ export const CreateAccount = () => {
   const {
     register,
     getValues,
-    watch,
     handleSubmit,
     formState,
     formState: { errors },
@@ -78,7 +77,7 @@ export const CreateAccount = () => {
           <input
             className="input"
             {...register("email", {
-              required: "Email is required",
+              required: "email is required",
               pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             })}
             name="email"
@@ -87,11 +86,11 @@ export const CreateAccount = () => {
             placeholder="Email"
           />
           {errors.email?.message && <FormError errorMessage={errors.email?.message} />}
-          {errors.email?.type === "pattern" && <FormError errorMessage={"Please enter a valid email"} />}
+          {errors.email?.type === "pattern" && <FormError errorMessage={"Please enter valid email"} />}
           <input
             className="input"
             {...register("password", {
-              required: "This is required",
+              required: "password is required",
               minLength: 10,
             })}
             name="password"
@@ -99,6 +98,7 @@ export const CreateAccount = () => {
             required
             placeholder="Password"
           />
+          {errors.password?.message && <FormError errorMessage={errors.password?.message} />}
           {errors.password?.type === "minLength" && <FormError errorMessage="Password must be more than 10 chars" />}
           <select {...register} className="input" name="role">
             {Object.keys(UserRole).map((role) => (

@@ -10,8 +10,7 @@ describe("<Restaurant/>", () => {
   };
 
   it("redner success with props", () => {
-    const { debug, getByText } = render(<Restaurant {...testProps} />);
-    debug();
+    const { getByText } = render(<Restaurant {...testProps} />);
     getByText(testProps.name);
     getByText(testProps.categoryName);
 
