@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMe } from "../../hooks/useMe";
 import nuberLogo from "../../images/logo.svg";
 
-const Header = () => {
+export const Header = () => {
   const { data } = useMe();
 
   return (
@@ -30,5 +30,3 @@ const Header = () => {
     </>
   );
 };
-
-export default Header;

@@ -11,7 +11,7 @@ import Logo from "../../images/logo.svg";
 import { authToken, isLoggedInVar } from "../../apollo";
 import { LOCALSTORAGE_TOKEN } from "../../constants";
 
-const LOGIN_MUTATION = gql`
+export const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
     login(input: $loginInput) {
       ok
@@ -21,7 +21,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const Login = () => {
+export const Login = () => {
   const {
     register,
     getValues,
@@ -76,7 +76,7 @@ const Login = () => {
           <input
             className="input"
             {...register("email", {
-              required: "This is required",
+              required: "email is required",
               pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             })}
             name="email"
@@ -84,11 +84,12 @@ const Login = () => {
             required
             placeholder="Email"
           />
+          {errors.email?.type === "pattern" && <FormError errorMessage="Please enter valid email" />}
           {errors.email?.message && <FormError errorMessage={errors.email?.message} />}
           <input
             className="input"
             {...register("password", {
-              required: "This is required",
+              required: "password is required",
               minLength: 10,
             })}
             name="password"
@@ -97,6 +98,7 @@ const Login = () => {
             placeholder="Password"
           />
           {errors.password?.type === "minLength" && <FormError errorMessage="Password must be more than 10 chars" />}
+          {errors.password?.message && <FormError errorMessage={errors.password?.message} />}
           <Button canClick={formState.isValid} loading={loading} actionText="login" buttonType="submit" />
           {loginMutationResult?.login.error && <FormError errorMessage={loginMutationResult?.login.error} />}
         </form>
@@ -110,5 +112,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;

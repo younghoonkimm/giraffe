@@ -1,7 +1,7 @@
 import React from "react";
 import { RestaurantType } from "./type";
 
-const Restaurant: React.FC<RestaurantType> = ({ id, coverImg, name, categoryName }) => {
+export const Restaurant: React.FC<RestaurantType> = ({ coverImg, name, categoryName }) => {
   return (
     <>
       <div style={{ backgroundImage: `url(${coverImg})` }} className="bg-red-500 bg-cover bg-center py-28"></div>
@@ -10,5 +10,3 @@ const Restaurant: React.FC<RestaurantType> = ({ id, coverImg, name, categoryName
     </>
   );
 };
-
-export default Restaurant;

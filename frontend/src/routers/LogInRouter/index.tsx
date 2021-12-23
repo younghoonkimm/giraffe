@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
 import Restaurants from "../../pages/Restaurants";
-import Header from "../../components/Header";
+import { Header } from "../../components/Header";
 import { useMe } from "../../hooks/useMe";
 import { UserRole } from "../../__generated__/globalTypes";
 import ConfirmEmail from "../../pages/ConfirmEmail";
