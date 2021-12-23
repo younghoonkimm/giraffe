@@ -10,7 +10,7 @@ import { UserRole } from "../../__generated__/globalTypes";
 import Logo from "../../images/logo.svg";
 import { createAccountMutation, createAccountMutationVariables } from "../../__generated__/createAccountMutation";
 
-const CREATE_ACCOUNT_MUTATION = gql`
+export const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
     createAccount(input: $createAccountInput) {
       ok
@@ -19,7 +19,7 @@ const CREATE_ACCOUNT_MUTATION = gql`
   }
 `;
 
-const CreateAccount = () => {
+export const CreateAccount = () => {
   const {
     register,
     getValues,
@@ -120,5 +120,3 @@ const CreateAccount = () => {
     </div>
   );
 };
-
-export default CreateAccount;
