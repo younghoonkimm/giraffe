@@ -1,10 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
 import { createMockClient, MockApolloClient } from "mock-apollo-client";
-import { render, RenderResult, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter as Router } from "react-router-dom";
-
+import { waitFor, render, RenderResult } from "../../../test-utils";
 import { Login, LOGIN_MUTATION } from "../index";
 
 describe("<Login/>", () => {
@@ -14,13 +11,9 @@ describe("<Login/>", () => {
     await waitFor(async () => {
       mockClient = createMockClient();
       renderResult = render(
-        <HelmetProvider>
-          <Router>
-            <ApolloProvider client={mockClient}>
-              <Login />
-            </ApolloProvider>
-          </Router>
-        </HelmetProvider>
+        <ApolloProvider client={mockClient}>
+          <Login />
+        </ApolloProvider>
       );
     });
   });
@@ -30,7 +23,7 @@ describe("<Login/>", () => {
     });
   });
   it("display email validate error", async () => {
-    const { getByPlaceholderText, debug, getByRole } = renderResult;
+    const { getByPlaceholderText, getByRole } = renderResult;
     const email = getByPlaceholderText(/email/i);
     await waitFor(() => {
       userEvent.type(email, "kxkm05.com");
@@ -70,12 +63,13 @@ describe("<Login/>", () => {
         login: {
           ok: true,
           token: "token",
-          error: null,
+          error: "mutation error",
         },
       },
     });
 
     mockClient.setRequestHandler(LOGIN_MUTATION, mockedMutationResponse);
+    jest.spyOn(Storage.prototype, "setItem");
     await waitFor(() => {
       userEvent.type(email, formData.email);
       userEvent.type(password, formData.password);
@@ -87,5 +81,8 @@ describe("<Login/>", () => {
         ...formData,
       },
     });
+    const errorMessage = getByRole("alert");
+    expect(errorMessage).toHaveTextContent(/mutation error/i);
+    expect(localStorage.setItem).toHaveBeenCalledWith("token", "token");
   });
 });
