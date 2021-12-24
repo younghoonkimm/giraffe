@@ -4,7 +4,7 @@ import Restaurants from "../../pages/Restaurants";
 import { Header } from "../../components/Header";
 import { useMe } from "../../hooks/useMe";
 import { UserRole } from "../../__generated__/globalTypes";
-import ConfirmEmail from "../../pages/ConfirmEmail";
+import { ConfirmEmail } from "../../pages/ConfirmEmail";
 import EditProfile from "../../pages/EditProfile";
 import SearchPage from "../../pages/SearchPage";
 import { Category } from "../../pages/Category";
