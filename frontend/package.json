@@ -17,6 +17,7 @@
     "@types/react-helmet": "^6.1.4",
     "apollo": "^2.33.6",
     "autoprefixer": "^10.4.0",
+    "cypress": "^9.2.0",
     "graphql": "^15.5.1",
     "mock-apollo-client": "^1.2.0",
     "postcss": "^8.4.4",
