@@ -80,6 +80,7 @@ describe("<CreateAccount/>", () => {
         },
       },
     });
+
     mockClient.setRequestHandler(CREATE_ACCOUNT_MUTATION, mockedLoginMutation);
     // jest.spyOn(window, "alert").mockImplementation(() => null);
     await waitFor(() => {

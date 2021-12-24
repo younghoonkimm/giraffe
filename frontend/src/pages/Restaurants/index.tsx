@@ -49,7 +49,7 @@ const Restaurants = () => {
 
   const onSearchSubmit = () => {
     const { searchText } = getValues();
-    console.log(getValues());
+
     navigate({
       pathname: "search",
       search: `?${createSearchParams({
