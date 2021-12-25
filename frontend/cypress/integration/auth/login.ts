@@ -1,13 +1,14 @@
-describe("Login page", () => {
+describe("Log In", () => {
   const user = cy;
   it("should see login page", () => {
     user.visit("/").title().should("eq", "Login | Giraffe");
   });
-  it("can fill out the form", () => {
+  it("can see email / password validation errors", () => {
     user.visit("/");
     user.findByPlaceholderText(/email/i).type("bad@email");
     user.findByRole("alert").should("have.text", "Please enter valid email");
     user.findByPlaceholderText(/email/i).clear();
+    user.findByRole("alert").should("have.text", "email is required");
     user.findByPlaceholderText(/email/i).type("bad@email.com");
     user
       .findByPlaceholderText(/password/i)
@@ -15,17 +16,11 @@ describe("Login page", () => {
       .clear();
     user.findByRole("alert").should("have.text", "password is required");
   });
-
-  //to do login
-});
-it("can see email / pw validation error", () => {
-  // user
-  //   .visit("/")
-  //   .get('[name="email"]')
-  //   .type("abcd.com")
-  //   .get(".text-medium")
-  //   .should("have.text", "Please enter valid email");
-  // .get('[name="password"]');
-  //   .type("abcde@@")
-  //   .should("have.text", "Password must be more than 10 chars");
+  it("can fill out the form", () => {
+    user.visit("/");
+    user.findByPlaceholderText(/email/i).type("kxkm09@naver.com");
+    user.findByPlaceholderText(/password/i).type("aosldk!318");
+    user.findByRole("button").should("not.have.class", "pointer-events-none").click();
+    user.window().its("localStorage.token").should("be.a", "string");
+  });
 });
