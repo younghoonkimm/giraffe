@@ -1,16 +1,16 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
-import Restaurants from "../../pages/Restaurants";
+import { Restaurants } from "../../pages/client/Restaurants";
 import { Header } from "../../components/Header";
 import { useMe } from "../../hooks/useMe";
 import { UserRole } from "../../__generated__/globalTypes";
-import { ConfirmEmail } from "../../pages/ConfirmEmail";
-import EditProfile from "../../pages/EditProfile";
-import SearchPage from "../../pages/SearchPage";
-import { Category } from "../../pages/Category";
-import Restaurant from "../../pages/Restaurant";
-import { MyRestaurants } from "../../pages/MyRestaurants";
-import AddRestaurant from "../../pages/AddRestaurant";
+import { ConfirmEmail } from "../../pages/common/ConfirmEmail";
+import { EditProfile } from "../../pages/common/EditProfile";
+import { SearchPage } from "../../pages/client/SearchPage";
+import { Category } from "../../pages/client/Category";
+import { Restaurant } from "../../pages/client/Restaurant";
+import { MyRestaurants } from "../../pages/Owner/MyRestaurants";
+import { AddRestaurant } from "../../pages/Owner/AddRestaurant";
 
 const commonRoutes = [
   {
