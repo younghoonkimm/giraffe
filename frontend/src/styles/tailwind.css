@@ -7,6 +7,14 @@
   }
 } */
 
+.container {
+  @apply max-w-screen-2xl mx-auto;
+}
+
+.link {
+  @apply text-lime-600 hover:underline;
+}
+
 .input {
   @apply bg-gray-100 py-3 px-2 shadow-inner focus:ring-2 focus:ring-gray-200 focus:outline-none text-lg font-light transition-colors;
 }
