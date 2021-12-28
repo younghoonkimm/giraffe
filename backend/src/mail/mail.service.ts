@@ -3,7 +3,6 @@ import got from "got";
 import * as FormData from "form-data";
 import { CONFIG_OPTIONS } from "src/common/common.constants";
 import { MailModuleOptions } from "./mail.interface";
-import { text } from "express";
 import { EmailVars } from "src/jwt/jwt.interfaces";
 
 @Injectable()

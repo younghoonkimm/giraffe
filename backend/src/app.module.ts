@@ -10,7 +10,6 @@ import { UsersModule } from "./users/users.module";
 import { OrdersModule } from "./orders/orders.module";
 import { User } from "./users/entities/user.entity";
 import { JwtModule } from "./jwt/jwt.module";
-import { JWTMiddlewares } from "./jwt/jwt.middlewares";
 import { AuthModule } from "./auth/auth.module";
 import { Verification } from "./users/entities/verification.entity";
 import { MailModule } from "./mail/mail.module";
@@ -23,7 +22,7 @@ import { OrderItem } from "./orders/entities/order-item";
 import { CommonModule } from "./common/common.module";
 import { PaymentsModule } from "./payments/payments.module";
 import { Payment } from "./payments/entities/payment.entity";
-import { UploadsModule } from './uploads/uploads.module';
+import { UploadsModule } from "./uploads/uploads.module";
 
 @Module({
   imports: [
@@ -42,6 +41,8 @@ import { UploadsModule } from './uploads/uploads.module';
         MAIL_API_KEY: Joi.string().required(),
         MAIL_FROM_EMAIL: Joi.string().required(),
         MAIL_DOMAIN_NAME: Joi.string().required(),
+        AWS_ACCESS_KEY_ID: Joi.string().required(),
+        AWS_SECRET_ACESS_KEY: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
