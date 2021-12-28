@@ -44,8 +44,8 @@ Cypress.Commands.add("assertLoggedOut", () => {
 
 Cypress.Commands.add("login", (email: string, password: string) => {
   cy.assertLoggedOut();
+  cy.visit("/");
   cy.findByPlaceholderText(/email/i).type(email);
   cy.findByPlaceholderText(/password/i).type(password);
   cy.findByRole("button").should("not.have.class", "pointer-events-none").click();
-  cy.assertLoggedIn();
 });

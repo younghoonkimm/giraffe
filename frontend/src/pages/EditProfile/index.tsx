@@ -86,6 +86,7 @@ const EditProfile = () => {
             className="input"
             type="email"
             name="email"
+            placeholder="email"
             required
           />
           <input
@@ -94,6 +95,7 @@ const EditProfile = () => {
             })}
             className="input"
             type="password"
+            placeholder="password"
             name="password"
           />
           <Button canClick={formState.isValid} loading={loading} actionText="Update Profile" buttonType="submit" />
