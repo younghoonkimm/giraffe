@@ -10,11 +10,7 @@ import SearchPage from "../../pages/SearchPage";
 import { Category } from "../../pages/Category";
 import Restaurant from "../../pages/Restaurant";
 
-const clientRoutes = [
-  {
-    path: "/",
-    component: <Restaurants />,
-  },
+const commonRoutes = [
   {
     path: "/confirm",
     component: <ConfirmEmail />,
@@ -22,6 +18,13 @@ const clientRoutes = [
   {
     path: "/edit-profile",
     component: <EditProfile />,
+  },
+];
+
+const clientRoutes = [
+  {
+    path: "/",
+    component: <Restaurants />,
   },
   {
     path: "/search",
@@ -54,6 +57,11 @@ export const LoginRouter = () => {
       <Routes>
         {data.me.role === UserRole.Client &&
           clientRoutes.map((route: any) => <Route key={route.path} path={route.path} element={route.component} />)}
+
+        {/* {data.me.role === UserRole.Owner && <div>owner</div>} */}
+        {commonRoutes.map((route: any) => (
+          <Route key={route.path} path={route.path} element={route.component} />
+        ))}
         {/* <Route path="*" element={<Navigate replace to="/" />} /> */}
       </Routes>
     </Router>
