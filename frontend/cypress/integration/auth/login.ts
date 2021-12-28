@@ -18,7 +18,7 @@ describe("Log In", () => {
   });
   it("can fill out the form", () => {
     user.visit("/");
-    user.login("kxkm09@nater.com", "adfsds!318");
+    user.login("kxkm09@nate.com", "adfsds!318");
     user.assertLoggedIn();
   });
 });

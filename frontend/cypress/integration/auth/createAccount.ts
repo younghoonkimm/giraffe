@@ -21,23 +21,17 @@ describe("Create Account", () => {
       if (operationName && operationName === "createAccountMutation") {
         req.reply((res) => {
           res.send({
-            data: {
-              createAccount: {
-                ok: true,
-                error: null,
-                __typename: "CreateAccountOutput",
-              },
-            },
+            fixture: "auth/createAccount.json",
           });
         });
       }
     });
     user.visit("/create-account");
-    user.findByPlaceholderText(/email/i).type("kxkm09@nater.com");
+    user.findByPlaceholderText(/email/i).type("kxkm09@nate.com");
     user.findByPlaceholderText(/password/i).type("adfsds!318");
     user.findByRole("button").click();
     user.wait(1000);
     user.visit("/").title().should("eq", "Login | Giraffe");
-    user.login("kxkm09@nater.com", "adfsds!318");
+    user.login("kxkm09@nate.com", "adfsds!318");
   });
 });
