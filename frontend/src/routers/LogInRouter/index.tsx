@@ -9,6 +9,7 @@ import EditProfile from "../../pages/EditProfile";
 import SearchPage from "../../pages/SearchPage";
 import { Category } from "../../pages/Category";
 import Restaurant from "../../pages/Restaurant";
+import { MyRestaurants } from "../../pages/MyRestaurants";
 
 const commonRoutes = [
   {
@@ -40,6 +41,13 @@ const clientRoutes = [
   },
 ];
 
+const ownerRoutes = [
+  {
+    path: "/",
+    component: <MyRestaurants />,
+  },
+];
+
 export const LoginRouter = () => {
   const { data, loading, error } = useMe();
 
@@ -57,8 +65,8 @@ export const LoginRouter = () => {
       <Routes>
         {data.me.role === UserRole.Client &&
           clientRoutes.map((route: any) => <Route key={route.path} path={route.path} element={route.component} />)}
-
-        {/* {data.me.role === UserRole.Owner && <div>owner</div>} */}
+        {data.me.role === UserRole.Owner &&
+          ownerRoutes.map((route: any) => <Route key={route.path} path={route.path} element={route.component} />)}
         {commonRoutes.map((route: any) => (
           <Route key={route.path} path={route.path} element={route.component} />
         ))}
