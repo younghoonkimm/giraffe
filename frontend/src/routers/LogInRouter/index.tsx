@@ -10,6 +10,7 @@ import SearchPage from "../../pages/SearchPage";
 import { Category } from "../../pages/Category";
 import Restaurant from "../../pages/Restaurant";
 import { MyRestaurants } from "../../pages/MyRestaurants";
+import AddRestaurant from "../../pages/AddRestaurant";
 
 const commonRoutes = [
   {
@@ -45,6 +46,10 @@ const ownerRoutes = [
   {
     path: "/",
     component: <MyRestaurants />,
+  },
+  {
+    path: "/add-restaurant",
+    component: <AddRestaurant />,
   },
 ];
 
