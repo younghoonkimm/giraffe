@@ -19,7 +19,7 @@ describe("<Login/>", () => {
   });
   it("should render OK", async () => {
     await waitFor(() => {
-      expect(document.title).toBe("Login | NuerEats");
+      expect(document.title).toBe("Login | Giraffe");
     });
   });
   it("display email validate error", async () => {
