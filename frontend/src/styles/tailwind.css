@@ -11,6 +11,10 @@
   @apply max-w-screen-2xl mx-auto;
 }
 
+.wrapper {
+  @apply px-5 xl:px-0 max-w-screen-xl mx-auto;
+}
+
 .link {
   @apply text-lime-600 hover:underline;
 }

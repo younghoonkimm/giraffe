@@ -72,34 +72,36 @@ export const EditProfile = () => {
   };
 
   return (
-    <div className="mt-52 flex flex-col justify-center items-center">
-      <Helmet>
-        <title>Edit Profile | Giraffe</title>
-      </Helmet>
-      <h4 className="font-semibold text-2xl mb-3">Edit profile</h4>
-      <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-        <form onSubmit={handleSubmit(onSubmit)} className="form">
-          <input
-            {...register("email", {
-              pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            })}
-            className="input"
-            type="email"
-            name="email"
-            placeholder="email"
-            required
-          />
-          <input
-            {...register("password", {
-              minLength: 10,
-            })}
-            className="input"
-            type="password"
-            placeholder="password"
-            name="password"
-          />
-          <Button canClick={formState.isValid} loading={loading} actionText="Update Profile" buttonType="submit" />
-        </form>
+    <div className="wrapper">
+      <div className="mt-52 flex flex-col justify-center items-center">
+        <Helmet>
+          <title>Edit Profile | Giraffe</title>
+        </Helmet>
+        <h4 className="font-semibold text-2xl mb-3">Edit profile</h4>
+        <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
+          <form onSubmit={handleSubmit(onSubmit)} className="form">
+            <input
+              {...register("email", {
+                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              })}
+              className="input"
+              type="email"
+              name="email"
+              placeholder="email"
+              required
+            />
+            <input
+              {...register("password", {
+                minLength: 10,
+              })}
+              className="input"
+              type="password"
+              placeholder="password"
+              name="password"
+            />
+            <Button canClick={formState.isValid} loading={loading} actionText="Update Profile" buttonType="submit" />
+          </form>
+        </div>
       </div>
     </div>
   );
