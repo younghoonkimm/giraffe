@@ -2,7 +2,6 @@ import React from "react";
 import { RestaurantType } from "./type";
 
 export const Restaurant: React.FC<RestaurantType> = ({ coverImg, name, categoryName }) => {
-  console.log(coverImg);
   return (
     <>
       <div style={{ backgroundImage: `url(${coverImg})` }} className="bg-cover bg-center py-28"></div>

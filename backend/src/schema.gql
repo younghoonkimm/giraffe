@@ -176,6 +176,7 @@ type TakeOrderOutput {
 type CreateRestaurantOutput {
   error: String
   ok: Boolean!
+  restaurantId: Int!
 }
 
 type EditRestaurantOutput {

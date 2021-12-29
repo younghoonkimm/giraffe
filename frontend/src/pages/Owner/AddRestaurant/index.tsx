@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useApolloClient, useMutation } from "@apollo/client";
 import { createRestaurant, createRestaurantVariables } from "../../../__generated__/createRestaurant";
 import { useForm } from "react-hook-form";
 import { AddRestaurantForm } from "./type";
@@ -11,20 +12,50 @@ import { MY_RESTAURANTS_QUERY } from "../MyRestaurants";
 const CREATE_RESTAURANT_MUTATION = gql`
   mutation createRestaurant($input: CreateRestaurantInput!) {
     createRestaurant(input: $input) {
-      error
       ok
+      error
+      restaurantId
     }
   }
 `;
 
 export const AddRestaurant = () => {
   const [uploading, setUploading] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const navigate = useNavigate();
+  const client = useApolloClient();
   const onCompleted = (data: createRestaurant) => {
     const {
-      createRestaurant: { ok, error },
+      createRestaurant: { ok, restaurantId },
     } = data;
     if (ok) {
+      const { name, categoryName, address } = getValues();
       setUploading(false);
+      const queryResult = client.readQuery({ query: MY_RESTAURANTS_QUERY });
+      client.writeQuery({
+        query: MY_RESTAURANTS_QUERY,
+        data: {
+          myRestaurants: {
+            ...queryResult.myRestaurants,
+            restaurants: [
+              {
+                address,
+                category: {
+                  name: categoryName,
+                  __typename: "Category",
+                },
+                coverImg: imageUrl,
+                id: restaurantId,
+                isPromoted: false,
+                name,
+                __typename: "Restaurant",
+              },
+              ...queryResult.myRestaurants.restaurants,
+            ],
+          },
+        },
+      });
+      navigate("/");
     }
   };
 
@@ -32,7 +63,7 @@ export const AddRestaurant = () => {
     CREATE_RESTAURANT_MUTATION,
     {
       onCompleted,
-      refetchQueries: [{ query: MY_RESTAURANTS_QUERY }],
+      // refetchQueries: [{ query: MY_RESTAURANTS_QUERY }],
     }
   );
 
@@ -58,6 +89,7 @@ export const AddRestaurant = () => {
         })
       ).json();
 
+      setImageUrl(coverImg);
       createRestaurantMutation({
         variables: {
           input: {
@@ -83,7 +115,7 @@ export const AddRestaurant = () => {
             className="input"
             {...register("name", {
               required: "name is required",
-              minLength: 5,
+              minLength: 2,
             })}
             type="text"
             required
