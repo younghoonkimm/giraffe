@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { gql, useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { DISH_FRAGMENT, RESTAURANT_FRAGMENT } from "../../../fragment";
 import { myRestaurant, myRestaurantVariables } from "../../../__generated__/myRestaurant";
+import { Dish } from "../../../components/Dish";
 
 const MY_RESTAURANT_QUERY = gql`
   query myRestaurant($input: MyRestaurantInput!) {
@@ -21,22 +22,20 @@ const MY_RESTAURANT_QUERY = gql`
   ${DISH_FRAGMENT}
 `;
 
-export const MyRestaurant = () => {
-  const params = useParams();
-  const { id } = params;
-  const [queryReadyToStart, { data, loading }] = useLazyQuery<myRestaurant, myRestaurantVariables>(MY_RESTAURANT_QUERY);
+interface IParams {
+  id: string;
+}
 
-  useEffect(() => {
-    if (id) {
-      queryReadyToStart({
-        variables: {
-          input: {
-            id: +id,
-          },
-        },
-      });
-    }
-  }, []);
+export const MyRestaurant = () => {
+  const { id } = useParams<keyof IParams>() as IParams;
+
+  const { data } = useQuery<myRestaurant, myRestaurantVariables>(MY_RESTAURANT_QUERY, {
+    variables: {
+      input: {
+        id: +id,
+      },
+    },
+  });
 
   return (
     <div>
@@ -59,7 +58,13 @@ export const MyRestaurant = () => {
             <div className="mt-10">
               {data?.myRestaurant.restaurant?.menu && data?.myRestaurant.restaurant?.menu.length === 0 ? (
                 <h4 className="text-xl mb-5">Please upload a dish!</h4>
-              ) : null}
+              ) : (
+                <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
+                  {data?.myRestaurant.restaurant?.menu?.map((dish) => (
+                    <Dish name={dish.name} description={dish.description} price={dish.price} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </>
