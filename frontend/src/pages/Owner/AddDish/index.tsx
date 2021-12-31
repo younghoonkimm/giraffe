@@ -8,6 +8,7 @@ import { Button } from "../../../components/Button";
 import { MY_RESTAURANTS_QUERY } from "../MyRestaurants";
 
 import { AddDishProps } from "./type";
+import { IParams } from "../MyRestaurant";
 
 const CREATE_DISH_MUTATION = gql`
   mutation createDish($input: CreateDishInput!) {
@@ -17,10 +18,6 @@ const CREATE_DISH_MUTATION = gql`
     }
   }
 `;
-
-interface IParams {
-  id: string;
-}
 
 export const AddDish = () => {
   const [optionsNumber, setOptionsNumber] = useState<number[]>([]);
