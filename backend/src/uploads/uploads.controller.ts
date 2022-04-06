@@ -11,8 +11,6 @@ import * as AWS from "aws-sdk";
 
 
 
-const BUCKET_NAME = "giraffeawsupload1";
-
 @Controller("uploads")
 export class UploadsController {
   constructor(private readonly config: ConfigService) {}
