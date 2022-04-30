@@ -8,15 +8,8 @@ import { ConfigService } from "@nestjs/config";
 import { FileInterceptor } from "@nestjs/platform-express";
 import * as AWS from "aws-sdk";
 
-// AWS.config.update({AWS_ACCESS_KEY_ID=AKIAVW4QO22OMFVSWX7L
 
-// AWS_SECRET_ACESS_KEY=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
-//     credentials:{
 
-//     }
-// })
-
-const BUCKET_NAME = "giraffeawsupload1";
 
 @Controller("uploads")
 export class UploadsController {
