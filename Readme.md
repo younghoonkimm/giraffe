@@ -41,4 +41,8 @@
 
 
 - [x] Profile
-- [x] 
+- [x] Search
+- [x] Restaurants
+- [x] Category
+- [x] Add Restaurants
+- [x] My Restaurants
