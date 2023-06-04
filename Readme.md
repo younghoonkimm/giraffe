@@ -1,6 +1,3 @@
-노마드 코더 우버이츠 클론코딩
-
-
 # server
 
 ## Resolvers
